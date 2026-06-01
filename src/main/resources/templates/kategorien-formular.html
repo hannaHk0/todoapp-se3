@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Kategorie bearbeiten</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; color: #222; }
+        label { display: block; margin-top: 1rem; font-weight: bold; }
+        input { padding: 0.4rem; margin-top: 0.3rem; }
+        button { margin-top: 1rem; padding: 0.4rem 1.2rem; cursor: pointer; }
+    </style>
+</head>
+<body>
+<h1>Kategorie bearbeiten</h1>
+<form th:action="@{/kategorie/speichern}" th:object="${kategorie}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <label for="name">Name</label>
+    <input type="text" id="name" th:field="*{name}" required>
+    <button type="submit">Speichern</button>
+    &nbsp;
+    <a href="/kategorien">Abbrechen</a>
+</form>
+</body>
+</html>

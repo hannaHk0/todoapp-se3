@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="de">
+<head>
+    <meta charset="UTF-8">
+    <title>Kategorien</title>
+    <style>
+        body { font-family: Arial, sans-serif; margin: 2rem; color: #222; }
+        table { border-collapse: collapse; width: 100%; background: white; margin-top: 1rem; }
+        th, td { border: 1px solid #ccc; padding: 0.6rem 1rem; text-align: left; }
+        th { background-color: #e8e8e8; }
+        label { display: block; margin-top: 1rem; font-weight: bold; }
+        input { padding: 0.4rem; margin-top: 0.3rem; }
+        button { margin-top: 1rem; padding: 0.4rem 1.2rem; cursor: pointer; }
+        .erfolg { color: green; font-weight: bold; }
+        .fehler { color: red; font-weight: bold; }
+    </style>
+</head>
+<body>
+<h1>Kategorien verwalten</h1>
+<a href="/">← Zurück zur To-Do-Liste</a>
+
+<p th:if="${erfolg}" th:text="${erfolg}" class="erfolg"></p>
+<p th:if="${fehler}" th:text="${fehler}" class="fehler"></p>
+
+<h2>Neue Kategorie</h2>
+<form th:action="@{/kategorie/speichern}" th:object="${kategorie}" method="post">
+    <input type="hidden" th:field="*{id}">
+    <label for="name">Name</label>
+    <input type="text" id="name" th:field="*{name}" required>
+    <button type="submit">Speichern</button>
+</form>
+
+<h2>Vorhandene Kategorien</h2>
+<table>
+    <tr>
+        <th>Name</th>
+        <th>Aktionen</th>
+    </tr>
+    <tr th:each="kat : ${kategorien}">
+        <td th:text="${kat.name}"></td>
+        <td>
+            <a th:href="@{/kategorie/bearbeiten/{id}(id=${kat.id})}">Bearbeiten</a>
+            &nbsp;
+            <form th:action="@{/kategorie/loeschen/{id}(id=${kat.id})}"
+                  method="post" style="display:inline"
+                  onsubmit="return confirm('Kategorie wirklich löschen?')">
+                <button type="submit">Löschen</button>
+            </form>
+        </td>
+    </tr>
+    <tr th:if="${#lists.isEmpty(kategorien)}">
+        <td colspan="2">Noch keine Kategorien vorhanden.</td>
+    </tr>
+</table>
+</body>
+</html>
