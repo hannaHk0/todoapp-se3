@@ -1,6 +1,8 @@
 package de.dhbw.todoapp.model;
 
 import jakarta.persistence.Entity;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
@@ -14,8 +16,8 @@ public class Todo {
 
     private String titel;
     private String beschreibung;
-    private boolean erledigt;
-
+    @Enumerated(EnumType.STRING)
+    private TodoStatus status;
     @ManyToOne
     private Category category;
 
@@ -39,11 +41,11 @@ public class Todo {
         this.beschreibung = beschreibung;
     }
 
-    public boolean isErledigt() {
-        return erledigt;
+    public TodoStatus getStatus() {
+        return status;
     }
-    public void setErledigt(boolean erledigt) {
-        this.erledigt = erledigt;
+    public void setStatus(TodoStatus status) {
+        this.status = status;
     }
 
     public Category getCategory() {

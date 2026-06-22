@@ -14,7 +14,10 @@
         button { cursor: pointer; }
         .erfolg { color: green; font-weight: bold; }
         .fehler { color: red; font-weight: bold; }
-        .erledigt { opacity: 0.5; text-decoration: line-through; }
+        .status-done {color: green; font-weight: bold; }
+        .status-in-progress { color: #e67e00; font-weight: bold; }
+        .status-on-hold { color: #888; }
+        .status-not-started { color: #cc0000; }
     </style>
 </head>
 <body>
@@ -32,14 +35,19 @@
         <th>Titel</th>
         <th>Beschreibung</th>
         <th>Kategorie</th>
-        <th>Erledigt</th>
+        <th>Status</th>
         <th>Aktionen</th>
     </tr>
-    <tr th:each="todo : ${todos}" th:classappend="${todo.erledigt} ? 'erledigt' : ''">
+    <tr th:each="todo : ${todo}" th:classappend="${todo.status != null and todo.status.name() == 'DONE'} ? 'erledigt' : ''">
         <td th:text="${todo.titel}"></td>
         <td th:text="${todo.beschreibung}"></td>
         <td th:text="${todo.category != null ? todo.category.name : '-'}"></td>
-        <td th:text="${todo.erledigt ? 'Ja' : 'Nein'}"></td>
+        <td th:text="${todo.status != null ? todo.status.displayName : '-'}"
+            th:classappend="${todo.status != null and todo.status.name() == 'DONE'} ? 'status-done' :
+                                (${todo.status != null and todo.status.name() == 'IN_PROGRESS'} ? 'status-in-progress' :
+                                (${todo.status != null and todo.status.name() == 'ON_HOLD'} ? 'status-on-hold' : 'status-not-started'))">
+        </td>
+
         <td>
             <a th:href="@{/todo/bearbeiten/{id}(id=${todo.id})}">Bearbeiten</a>
             &nbsp;
@@ -50,7 +58,7 @@
             </form>
         </td>
     </tr>
-    <tr th:if="${#lists.isEmpty(todos)}">
+    <tr th:if="${#lists.isEmpty(todo)}">
         <td colspan="5">Noch keine To-Dos vorhanden.</td>
     </tr>
 </table>

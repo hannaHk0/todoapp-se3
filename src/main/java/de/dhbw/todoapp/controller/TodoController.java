@@ -1,6 +1,7 @@
 package de.dhbw.todoapp.controller;
 
 import de.dhbw.todoapp.model.Todo;
+import de.dhbw.todoapp.model.TodoStatus;
 import de.dhbw.todoapp.service.CategoryService;
 import de.dhbw.todoapp.service.TodoService;
 import java.util.Optional;
@@ -28,7 +29,7 @@ public class TodoController {
 
     @GetMapping("/")
     public String alleAnzeigen(Model model) {
-        model.addAttribute("todos", todoService.alleToDosFinden()); // "todo" → "todos"
+        model.addAttribute("todo", todoService.alleToDosFinden());
         return "index";
     }
 
@@ -36,6 +37,7 @@ public class TodoController {
     public String neuesFormular(Model model) {
         model.addAttribute("todo", new Todo());
         model.addAttribute("kategorien", categoryService.alleKategorienFinden());
+        model.addAttribute("statusOptionen", TodoStatus.values());
         return "todo-formular";
     }
 
@@ -45,6 +47,7 @@ public class TodoController {
         if (todo.isPresent()) {
             model.addAttribute("todo", todo.get());
             model.addAttribute("kategorien", categoryService.alleKategorienFinden());
+            model.addAttribute("statusOptionen", TodoStatus.values());
             return "todo-formular";
         }
         logger.warn("Todo mit ID {} nicht gefunden", id);
@@ -56,6 +59,7 @@ public class TodoController {
         if (todo.getTitel() == null || todo.getTitel().isBlank()) {
             model.addAttribute("fehler", "Titel darf nicht leer sein.");
             model.addAttribute("kategorien", categoryService.alleKategorienFinden());
+            model.addAttribute("statusOptionen",TodoStatus.values());
             return "todo-formular";
         }
         todoService.todoSpeichern(todo);

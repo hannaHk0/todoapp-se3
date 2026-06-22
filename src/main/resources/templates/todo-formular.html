@@ -25,10 +25,13 @@
     <label for="beschreibung">Beschreibung</label>
     <textarea id="beschreibung" th:field="*{beschreibung}" rows="3"></textarea>
 
-    <label for="erledigt">Erledigt</label>
-    <select id="erledigt" th:field="*{erledigt}">
-        <option value="false">Nein</option>
-        <option value="true">Ja</option>
+    <label for="status">Status</label>
+    <select id="status" th:field="*{status}">
+        <option value="">-- Status wählen --</option>
+        <option th:each="s : ${statusOptionen}"
+                th:value="${s}"
+                th:text="${s.displayName}">
+        </option>
     </select>
 
     <label for="category">Kategorie</label>
