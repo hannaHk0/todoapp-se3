@@ -48,7 +48,7 @@ public class CategoryController {
         Optional<Category> kategorie = categoryService.kategorieFinden(id);
         if (kategorie.isPresent()) {
             model.addAttribute("kategorie", kategorie.get());
-            return "kategorie-formular";
+            return "kategorien-formular";
         }
         logger.warn("Kategorie mit ID {} nicht gefunden", id);
         return "redirect:/kategorien";

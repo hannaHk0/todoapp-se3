@@ -39,7 +39,7 @@ public class CategoryService {
                 return false;
             }
             categoryRepo.deleteById(id);
-            return false;
+            return true;
         } catch (Exception e){
             logger.warn("Fehler beom Löschen der Kategorie mit ID {}: {}", id, e.getMessage());
             return false;
