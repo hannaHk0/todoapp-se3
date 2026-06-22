@@ -14,13 +14,15 @@ public class CategoryService {
     public CategoryService ( CategoryRepo categoryRepo){
         this.categoryRepo = categoryRepo;
     }
+    /** Gibt alle Kategorien zurück. */
     public List<Category> alleKategorienFinden(){
         return categoryRepo.findAll();
     }
+    /** Gibt eine einzelne Kategorie anhand der ID zurück. */
     public Optional<Category> kategorieFinden (Long id){
         return categoryRepo.findById(id);
     }
-
+    /** Speichert eine neue oder aktualisiert eine bestehende Kategorie. */
     public void kategorieSpeichern (Category category){
         try {
             categoryRepo.save(category);
@@ -28,7 +30,7 @@ public class CategoryService {
             logger.warn("Fehler beim Speichern der Kategorie: {}", e.getMessage());
         }
     }
-
+    /** Löscht eine Kategorie anhand der ID. */
     public boolean kategorieLoeschen (Long id){
         try {
             Optional<Category> kategorie = categoryRepo.findById(id);

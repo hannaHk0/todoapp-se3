@@ -20,6 +20,7 @@ public class CategoryController {
         this.categoryService = categoryService;
     }
 
+    /** Startseite: alle Todos anzeigen */
     @GetMapping("/kategorien")
     public String alleAnzeigen(Model model) {
         model.addAttribute("kategorien", categoryService.alleKategorienFinden());
@@ -27,10 +28,10 @@ public class CategoryController {
         return "kategorien";
     }
 
+    /** Formular für neues Todo anzeigen */
     @PostMapping("/kategorie/speichern")
     public String speichern(@ModelAttribute Category category,
-                            Model model,
-                            RedirectAttributes attrs) {
+                            Model model, RedirectAttributes attrs) {
         if (category.getName() == null || category.getName().isBlank()) {
             model.addAttribute("fehler", "Name darf nicht leer sein.");
             model.addAttribute("kategorien", categoryService.alleKategorienFinden());
@@ -41,7 +42,7 @@ public class CategoryController {
         return "redirect:/kategorien";
     }
 
-
+    /** Neues Todo speichern (Formular abgeschickt) */
     @GetMapping("/kategorie/bearbeiten/{id}")
     public String bearbeitenFormular(@PathVariable Long id, Model model) {
         Optional<Category> kategorie = categoryService.kategorieFinden(id);
@@ -53,7 +54,7 @@ public class CategoryController {
         return "redirect:/kategorien";
     }
 
-
+    /** Todo löschen – mit Sicherheitsabfrage im HTML */
     @PostMapping("/kategorie/loeschen/{id}")
     public String loeschen(@PathVariable Long id, RedirectAttributes attrs) {
         boolean erfolg = categoryService.kategorieLoeschen(id);

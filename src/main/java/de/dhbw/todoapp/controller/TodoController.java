@@ -26,13 +26,13 @@ public class TodoController {
         this.todoService = todoService;
         this.categoryService = categoryService;
     }
-
+    /** Startseite: zeigt alle Todos an. */
     @GetMapping("/")
     public String alleAnzeigen(Model model) {
         model.addAttribute("todo", todoService.alleToDosFinden());
         return "index";
     }
-
+    /** Zeigt das Formular für ein neues Todo. */
     @GetMapping("/todo/neu")
     public String neuesFormular(Model model) {
         model.addAttribute("todo", new Todo());
@@ -40,7 +40,7 @@ public class TodoController {
         model.addAttribute("statusOptionen", TodoStatus.values());
         return "todo-formular";
     }
-
+    /** Zeigt das Formular zum Bearbeiten eines bestehenden Todos. */
     @GetMapping("/todo/bearbeiten/{id}")
     public String bearbeitenFormular(@PathVariable Long id, Model model) {
         Optional<Todo> todo = todoService.todoFinden(id);
@@ -53,7 +53,7 @@ public class TodoController {
         logger.warn("Todo mit ID {} nicht gefunden", id);
         return "redirect:/";
     }
-
+    /** Speichert ein neues oder bearbeitetes Todo. */
     @PostMapping("/todo/speichern")
     public String speichern(@ModelAttribute Todo todo, Model model, RedirectAttributes attrs) {
         if (todo.getTitel() == null || todo.getTitel().isBlank()) {
@@ -66,7 +66,7 @@ public class TodoController {
         attrs.addFlashAttribute("erfolg", "To-Do erfolgreich gespeichert.");
         return "redirect:/";
     }
-
+    /** Löscht ein Todo – Sicherheitsabfrage kommt vom HTML. */
     @PostMapping("/todo/loeschen/{id}")
     public String loeschen(@PathVariable Long id, RedirectAttributes attrs) {
         todoService.todoLoeschen(id);

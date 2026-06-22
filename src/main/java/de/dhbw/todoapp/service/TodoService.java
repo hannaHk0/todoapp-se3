@@ -14,9 +14,11 @@ public class TodoService {
     private final TodoRepo todoRepo;
 
     public TodoService (TodoRepo todoRepo){this.todoRepo = todoRepo;}
-
+    /** Alle Todos aus der Datenbank laden. */
     public List<Todo> alleToDosFinden () {return todoRepo.findAll();}
+    /** Ein einzelnes Todo anhand der ID finden. */
     public Optional<Todo> todoFinden (Long id){return todoRepo.findById(id);}
+    /** Ein neues Todo speichern oder ein bestehendes aktualisieren. */
     public void todoSpeichern (Todo todo){
         try {
             todoRepo.save(todo);
@@ -24,6 +26,8 @@ public class TodoService {
             logger.warn("Fehler beim Speichern des Todos: {}", e.getMessage());
         }
     }
+
+    /** Ein Todo löschen. */
     public void todoLoeschen (Long id){
         try {
             todoRepo.deleteById(id);

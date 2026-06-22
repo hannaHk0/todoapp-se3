@@ -7,7 +7,9 @@ import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
-
+/**
+ * Repräsentiert eine einzelne To-Do-Aufgabe.
+ */
 @Entity
 public class Todo {
     @Id
@@ -20,7 +22,7 @@ public class Todo {
     private TodoStatus status;
     @ManyToOne
     private Category category;
-
+    // Getter und Setter
     public Long getId() {
         return id;
     }

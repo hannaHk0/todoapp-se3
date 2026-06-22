@@ -6,7 +6,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToMany;
 import java.util.List;
-
+/**
+ * Repräsentiert eine Kategorie für To-Dos (z.B. "Arbeit", "Privat").
+ */
 @Entity
 public class Category {
     @Id
@@ -16,7 +18,7 @@ public class Category {
 
     @OneToMany(mappedBy = "category")
     private List<Todo> todos;
-
+    // Getter und Setter
     public Long getId() {return id;}
     public void setId(Long id) {
         this.id = id;
